@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FREE</title>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'SF Pro Display', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            min-height: 100vh;
+            background: url('background.jpg') center/cover no-repeat fixed;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #000;
+        }
+
+        .dashboard-container {
+            margin-top: 50px;
+            width: 90%;
+            max-width: 1000px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(25px);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+            animation: fadeIn 0.8s ease forwards;
+            position: relative;
+            z-index: 2;
+        }
+
+        .post-detail-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .post-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .post-content {
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
+        .mini-tabs {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            border-bottom: 2px solid #007aff;
+        }
+
+        .mini-tab {
+            padding: 10px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-right: 20px;
+            transition: 0.3s;
+        }
+
+        .mini-tab:hover {
+            color: #007aff;
+            border-bottom: 2px solid #007aff;
+        }
+
+        .active-tab {
+            color: #007aff;
+            border-bottom: 2px solid #007aff;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Embed Link Styles */
+        iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+            margin-top: 20px;
+            border-radius: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Dashboard Container -->
+<div class="dashboard-container" id="dashboardContainer">
+    <div class="post-detail-header">
+        <h2 class="post-title" id="postTitle"></h2>
+        <p class="post-date" id="postDate"></p>
+    </div>
+
+    <!-- Post Content -->
+    <div class="post-content" id="postContent"></div>
+
+    <!-- Mini Tabs (Menampilkan Link Sebagai Mini Tabs) -->
+    <div class="mini-tabs" id="miniTabsContainer">
+        <!-- Links akan ditambahkan di sini -->
+    </div>
+
+    <!-- Embeds untuk Link -->
+    <div id="embedContainer"></div>
+</div>
+
+<footer>&copy; 2026 @nipo Free Edition</footer>
+
+<script>
+// Fungsi untuk mengambil data postingan dari URL
+function getPostData() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const title = urlParams.get('title');
+    const posts = JSON.parse(localStorage.getItem('posts')) || [];
+    return posts.find(post => post.title === title);
+}
+
+// Menampilkan data postingan
+function displayPost(post) {
+    if (post) {
+        document.getElementById('postTitle').innerText = post.title;
+        // Perbaiki tanggal yang invalid
+        const postDate = new Date(post.date);
+        document.getElementById('postDate').innerText = isNaN(postDate) ? 'Tanggal tidak valid' : `Diterbitkan pada: ${postDate.toLocaleDateString()}`;
+        document.getElementById('postContent').innerHTML = post.content;
+
+        // Jika ada link di dalam postingan, buatkan embed untuk link tersebut
+        if (post.links && post.links.length > 0) {
+            const embedContainer = document.getElementById('embedContainer');
+            post.links.forEach(link => {
+                const iframe = document.createElement('iframe');
+                iframe.src = link;  // Link yang disertakan dalam postingan
+                embedContainer.appendChild(iframe);
+            });
+        }
+
+    } else {
+        document.getElementById('postTitle').innerText = 'Postingan tidak ditemukan';
+    }
+}
+
+// Menjalankan fungsi saat halaman dimuat
+window.onload = function () {
+    const post = getPostData();
+    displayPost(post);
+};
+</script>
+
+</body>
+</html>

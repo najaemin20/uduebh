@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ADMIN FREE</title>
+<link rel="icon" href="logo.png" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    transition: all 0.3s ease;
+}
+
+body {
+    background: linear-gradient(160deg, #f5f5f7, #e0e0e5);
+    color: #111;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* ========================= */
+/* LOGIN CARD */
+/* ========================= */
+
+.login-container {
+    background: rgba(255, 255, 255, 0.85);
+    padding: 40px 30px;
+    border-radius: 18px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(20px);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    animation: slideIn 0.8s ease-out;
+    z-index: 2;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.login-container h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.login-container input {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+}
+
+.login-container input:focus {
+    border-color: #007aff;
+    box-shadow: 0 0 15px rgba(0,122,255,0.4);
+    outline: none;
+}
+
+.login-container button {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    color: #fff;
+    font-weight: 700;
+    background: linear-gradient(145deg, #007aff, #00c6ff);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+}
+
+.login-container button:hover {
+    transform: scale(1.05);
+}
+
+/* ========================= */
+/* VIP BLUR OVERLAY */
+/* ========================= */
+
+.blur-overlay {
+    position: fixed;
+    inset: 0;
+    backdrop-filter: blur(8px);
+    background: rgba(0,0,0,0.25);
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.4s ease;
+    z-index: 1;
+}
+
+.blur-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ========================= */
+/* VIP NOTIFICATION */
+/* ========================= */
+
+.notification {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.7);
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(25px);
+    border-radius: 25px;
+    padding: 25px 35px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: #fff;  /* Default white text */
+    font-size: 1.2rem;
+    min-width: 320px;
+    max-width: 420px;
+    opacity: 0;
+    visibility: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+    transition: all 0.4s ease;
+    z-index: 3;
+}
+
+
+.notification.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.notification.success {
+    color: #00ff88;
+    box-shadow: 0 0 40px rgba(0,255,136,0.9);
+    border: 1px solid rgba(0,255,136,0.6);
+}
+
+.notification.error {
+    color: #dc3545;  /* Red text color for error */
+    box-shadow: 0 0 40px rgba(220,53,69,0.9);
+    border: 1px solid rgba(220,53,69,0.6);
+}
+
+.notification .icon {
+    font-size: 2rem;
+}
+
+/* VIP Progress Bar */
+.notification::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    width: 100%;
+    background: linear-gradient(90deg, #00ffcc, #007aff);
+    border-radius: 0 0 25px 25px;
+    animation: progressBar 3s linear forwards;
+}
+
+@keyframes progressBar {
+    from { width: 100%; }
+    to { width: 0%; }
+}
+
+.footer {
+    position: absolute;
+    bottom: 20px;
+    font-size: 0.9rem;
+}
+</style>
+</head>
+
+<body>
+
+<div class="blur-overlay" id="blur"></div>
+<div class="notification" id="notification"></div>
+
+<div class="login-container">
+    <h2>LOGIN</h2>
+    <form id="loginForm" onsubmit="return validateLogin()">
+        <input type="text" id="username" placeholder="Username" required />
+        <input type="password" id="password" placeholder="Password" required />
+        <button type="submit">Login</button>
+    </form>
+</div>
+
+<footer class="footer">
+    &copy; 2026 @nipo VIP Edition
+</footer>
+
+<script>
+function validateLogin() {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    const correctUsername = "admin";
+    const correctPassword = "vip";
+
+    if (username === correctUsername && password === correctPassword) {
+        showNotification('Login successful!', '#28a745');
+        setTimeout(() => {
+            window.location.href = "free_admin_dashboard_home.html";
+        }, 2000);
+        return false;
+    } else {
+        showNotification('Username atau password salah!', '#dc3545');
+        return false;
+    }
+}
+
+function showNotification(message, color) {
+    const notification = document.getElementById('notification');
+    const blur = document.getElementById('blur');
+
+    const type = color === '#28a745' ? 'success' : 'error';
+
+    notification.innerHTML = `
+        <span class="icon">${type === 'success' ? '👑' : '❌'}</span>
+        <span>${message}</span>
+    `;
+
+    notification.className = "notification show " + type;
+    blur.classList.add("active");
+
+    setTimeout(() => {
+        notification.classList.remove("show");
+        blur.classList.remove("active");
+    }, 3000);
+}
+
+window.onload = function() {
+    document.getElementById('notification').classList.remove("show");
+};
+</script>
+
+</body>
+</html>

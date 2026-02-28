@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help</title>
+    <link rel="icon" href="logo.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"> <!-- New font: Poppins -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif; /* Poppins font for better readability */
+            transition: all 0.3s ease;
+        }
+
+        body {
+            background: #f5f5f5; /* Subtle background color */
+            color: #333;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-x: hidden;
+        }
+
+        /* Sidebar with modern animation */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 280px;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 4px 0 40px rgba(0, 0, 0, 0.1);
+            padding: 100px 25px;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            transform: translateX(-100%);
+            opacity: 0;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        .sidebar.active {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .sidebar a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.2rem;
+            padding: 10px;
+            border-radius: 12px;
+            transition: background 0.3s ease, transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .sidebar a:hover {
+            background: rgba(0, 0, 0, 0.05);
+            transform: translateX(10px);
+        }
+
+        /* Main content area */
+        .main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 40px 20px;
+            text-align: center;
+            animation: fadeSlide 1s ease forwards;
+            background-color: #fff;
+            box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        @keyframes fadeSlide {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .main h1 {
+            font-size: 2.8rem;
+            color: #111;
+            margin-bottom: 20px;
+        }
+
+        .help-content {
+            width: 100%;
+            padding: 20px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .help-content p {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            color: #555;
+        }
+
+        .help-content h3 {
+            font-size: 1.8rem;
+            margin-top: 15px;
+            color: #222;
+        }
+
+        .help-content ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            font-size: 1.1rem;
+        }
+
+        .help-content ul li {
+            margin-bottom: 10px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .buttons button {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            color: #fff;
+            font-weight: 700;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+            max-width: 280px;
+        }
+
+        #contactBtn {
+            background: linear-gradient(145deg, #007aff, #3399ff);
+        }
+
+        #backBtn {
+            background: linear-gradient(145deg, #ff9500, #ffb347);
+        }
+
+        .buttons button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 18px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        footer {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+            padding: 15px;
+            text-align: center;
+            color: #111;
+            border-top: 1px solid rgba(255, 255, 255, 0.25);
+            font-size: 0.95rem;
+        }
+
+        @media(max-width: 600px) {
+            .main h1 {
+                font-size: 2.2rem;
+            }
+
+            .buttons button {
+                padding: 18px 45px;
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="sidebar" id="sidebar">
+    <a href="utama.html"><span class="icon">🏡</span> Home</a>
+    <a href="user.html"><span class="icon">👥</span> User</a>
+    <a href="admin.html"><span class="icon">👤</span> Admin</a>
+    <a href="help.html"><span class="icon">❓</span> Help</a>
+    <a href="support.html"><span class="icon">💬</span> Support</a>
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="hamburger" id="hamburger">
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+
+<div class="main">
+    <h1>Help</h1>
+    <div class="help-content">
+        <p><strong>Selamat datang di [Nama Website Anda]!</strong> Di website ini, kami menyediakan dua jenis akun pengguna: <strong>Free User</strong> dan <strong>VIP User</strong>. Berikut adalah penjelasan mengenai kedua jenis pengguna ini dan juga peran Admin dalam sistem kami.</p>
+
+        <h3>1. Free User</h3>
+        <p>Sebagai <strong>Free User</strong>, Anda dapat mengakses berbagai konten gratis di website kami. Berikut adalah fitur yang dapat Anda nikmati:</p>
+        <ul>
+            <li><strong>Akses Video Gratis</strong>: Anda dapat menonton video-video yang disediakan tanpa biaya.</li>
+            <li><strong>Artikel dan Materi Gratis</strong>: Anda dapat membaca artikel-artikel yang kami sediakan secara gratis untuk membantu Anda memahami lebih lanjut tentang topik yang ada di website.</li>
+        </ul>
+        <p><strong>Catatan:</strong> Pengguna Free User hanya memiliki akses terbatas dan tidak bisa mengakses fitur premium atau menghubungi bot secara langsung untuk mendapatkan layanan khusus.</p>
+
+        <h3>2. VIP User</h3>
+        <p>Untuk mendapatkan akses lebih banyak dan fitur premium, Anda dapat mendaftar sebagai <strong>VIP User</strong>. Pengguna VIP memiliki berbagai keuntungan berikut:</p>
+        <ul>
+            <li><strong>Akses ke Video Premium</strong>: VIP User dapat menonton video premium yang tidak tersedia untuk Free User.</li>
+            <li><strong>Konten Eksklusif</strong>: Dapatkan akses ke materi-materi yang hanya tersedia untuk VIP User.</li>
+            <li><strong>Layanan Bot VIP</strong>: Untuk pengguna VIP, Anda dapat menghubungi bot kami melalui platform <strong>@bot</strong> untuk mendapatkan bantuan atau informasi lebih lanjut yang tidak tersedia untuk Free User.</li>
+        </ul>
+        <p><strong>Langkah untuk Menjadi VIP User:</strong></p>
+        <ol>
+            <li><strong>Daftar atau Upgrade ke VIP</strong>: Jika Anda sudah terdaftar sebagai Free User, Anda dapat meng-upgrade akun Anda menjadi VIP melalui menu pengaturan di website.</li>
+            <li><strong>Hubungi Bot di @bot</strong>: Setelah upgrade, Anda dapat mengakses berbagai fitur premium dan layanan eksklusif dengan menghubungi bot kami di <strong>@bot</strong>.</li>
+        </ol>
+
+        <h3>3. Peran Admin</h3>
+        <p><strong>Admin</strong> memiliki hak istimewa yang lebih tinggi dibandingkan dengan pengguna biasa (Free User dan VIP User). Berikut adalah peran dan tanggung jawab Admin di website:</p>
+        <ul>
+            <li><strong>Manajemen Konten</strong>: Admin bertugas untuk memonitor dan mengelola konten yang ada di website.</li>
+            <li><strong>Pengelolaan Pengguna</strong>: Admin dapat melihat dan mengelola data pengguna, termasuk mengatur status Free User atau VIP User.</li>
+            <li><strong>Penyelesaian Masalah Pengguna</strong>: Admin dapat membantu menyelesaikan masalah teknis atau pertanyaan dari pengguna yang mungkin tidak dapat dijawab oleh bot.</li>
+        </ul>
+
+        <h3>Masalah Umum dan Solusi</h3>
+        <ul>
+            <li><strong>Website Tidak Dapat Diakses</strong>: Pastikan browser Anda sudah terupdate atau coba hapus cache browser Anda.</li>
+            <li><strong>Akses VIP Tidak Tersedia</strong>: Pastikan Anda telah meng-upgrade akun Anda ke VIP User dan menghubungi bot di <strong>@bot</strong>.</li>
+        </ul>
+
+        <p><strong>Kesimpulan:</strong> Website kami menyediakan dua jenis akun, <strong>Free User</strong> dan <strong>VIP User</strong>, untuk memberi pilihan sesuai kebutuhan Anda.</p>
+
+        <div class="buttons">
+            <button id="contactBtn" onclick="window.location.href='support.html'">Contact Support</button>
+            <button id="backBtn" onclick="window.location.href='index.html'">Back to Home</button>
+        </div>
+    </div>
+</div>
+
+<footer>
+    &copy; 2026 @nipo. All rights reserved.
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sidebar = document.getElementById('sidebar');
+        const hamburger = document.getElementById('hamburger');
+        const overlay = document.getElementById('overlay');
+
+        hamburger.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        });
+
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+    });
+</script>
+
+</body>
+</html>
